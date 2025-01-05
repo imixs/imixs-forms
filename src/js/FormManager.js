@@ -5,7 +5,6 @@ class FormManager {
     const urlParams = new URLSearchParams(window.location.search);
 
     // Default configuration with URL parameters
-
     this.config = {
       // API Configuration
       baseUrl: config.baseUrl || "/api",
@@ -54,7 +53,7 @@ class FormManager {
   }
 
   // Render form HTML
-  renderForm(formStructure, containerId) {
+  renderForm(formStructure, containerId, events = []) {
     const container = document.getElementById(containerId);
     if (!container) {
       console.error(`Container element with id '${containerId}' not found`);
@@ -64,6 +63,7 @@ class FormManager {
     const form = document.createElement("form");
     form.className = "imixs-form";
 
+    // Render form sections
     formStructure.forEach((section) => {
       const sectionDiv = document.createElement("div");
       sectionDiv.className = "imixs-form-section";
@@ -93,13 +93,40 @@ class FormManager {
       form.appendChild(sectionDiv);
     });
 
-    const submitButton = document.createElement("button");
-    submitButton.type = "submit";
-    submitButton.textContent = "Save";
-    form.appendChild(submitButton);
+    // Create button container
+    const buttonContainer = document.createElement("div");
+    buttonContainer.className = "imixs-form-buttons";
+
+    // Add event buttons
+    events.forEach((event) => {
+      if (event && event["workflow.public"] === true && event.name) {
+        const button = document.createElement("button");
+        button.type = "submit";
+        button.className = "imixs-submit-button";
+        button.textContent = event.name;
+        button.dataset.eventid = event.eventid;
+        buttonContainer.appendChild(button);
+      }
+    });
+
+    // If no events provided, add default submit button
+    if (events.length === 0) {
+      const defaultButton = document.createElement("button");
+      defaultButton.type = "submit";
+      defaultButton.className = "imixs-submit-button";
+      defaultButton.textContent = "Submit";
+      defaultButton.dataset.eventid = this.config.eventid;
+      buttonContainer.appendChild(defaultButton);
+    }
+
+    form.appendChild(buttonContainer);
 
     // Bind submit handler with the correct 'this' context
-    form.addEventListener("submit", (e) => this._handleSubmit(e));
+    form.addEventListener("submit", (e) => {
+      const submitButton = e.submitter;
+      const eventId = submitButton?.dataset?.eventid || this.config.eventid;
+      this._handleSubmit(e, eventId);
+    });
 
     container.innerHTML = "";
     container.appendChild(form);
@@ -128,7 +155,7 @@ class FormManager {
   }
 
   // Handle form submission
-  async _handleSubmit(event) {
+  async _handleSubmit(event, eventId) {
     event.preventDefault();
     const formData = new FormData(event.target);
 
@@ -136,18 +163,20 @@ class FormManager {
       // Im Test-Modus nur Daten ausgeben
       if (this.config.mockMode) {
         console.log("Form Data:", Object.fromEntries(formData));
-        const xmlDocument = this._createXMLDocument(formData);
+        console.log("Event ID:", eventId);
+        const xmlDocument = this._createXMLDocument(formData, eventId);
         console.log("XML Document:", xmlDocument);
 
         this._triggerEvent("formSubmitSuccess", {
           formData: Object.fromEntries(formData),
           xmlDocument: xmlDocument,
+          eventId: eventId,
         });
         return;
       }
 
       // Normaler API-Modus
-      const xmlDocument = this._createXMLDocument(formData);
+      const xmlDocument = this._createXMLDocument(formData, eventId);
       const response = await fetch(this.apiUrl, {
         method: "POST",
         headers: {
@@ -175,18 +204,15 @@ class FormManager {
   }
 
   // Create XML document from form data
-  _createXMLDocument(formData) {
+  _createXMLDocument(formData, eventId) {
     let xmlString = '<?xml version="1.0"?>\n';
     xmlString +=
       '<document xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema">\n';
 
     // Add required workflow properties
-    xmlString +=
-      '  <item name="$modelversion"><value xsi:type="xs:string">1.0</value></item>\n';
-    xmlString +=
-      '  <item name="$taskid"><value xsi:type="xs:int">1000</value></item>\n';
-    xmlString +=
-      '  <item name="$eventid"><value xsi:type="xs:int">10</value></item>\n';
+    xmlString += `  <item name="$modelversion"><value xsi:type="xs:string">${this.config.modelversion}</value></item>\n`;
+    xmlString += `  <item name="$taskid"><value xsi:type="xs:int">${this.config.taskid}</value></item>\n`;
+    xmlString += `  <item name="$eventid"><value xsi:type="xs:int">${eventId}</value></item>\n`;
 
     // Add form data
     for (let [name, value] of formData.entries()) {
