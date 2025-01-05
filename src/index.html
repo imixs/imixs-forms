@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Imixs Form Generator Test</title>
+    <link rel="stylesheet" href="./css/styles.css" />
+    <link rel="stylesheet" href="./css/error-styles.css" />
+  </head>
+  <body>
+    <div id="form-container"></div>
+
+    <script src="./js/ErrorManager.js"></script>
+    <script src="./js/ModelManager.js"></script>
+    <script src="./js/FormManager.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", async () => {
+        const errorManager = new ErrorManager();
+
+        const modelManager = new ModelManager({
+          baseUrl: "/api",
+          modelversion: "1.0.0",
+          taskid: "1000",
+        });
+
+        const formManager = new FormManager({
+          baseUrl: "/api",
+          workflowEndpoint: "workflow/workitem",
+          mockMode: true,
+        });
+
+        // Event Listener für Form-Submission
+        document.addEventListener("formSubmitSuccess", (e) => {
+          console.log("Form data:", e.detail);
+          errorManager.showInfo("Form submitted successfully!", {
+            timeout: 3000,
+          });
+        });
+
+        document.addEventListener("formSubmitError", (e) => {
+          errorManager.handleError(e.detail.error);
+        });
+
+        try {
+          // Get task definition including form definition from model
+          const modelData = await modelManager.getTaskDefinition();
+          console.log("Model data:", modelData);
+
+          // Generate form from definition
+          const formStructure = await formManager.parseFormDefinition(
+            modelData.formDefinition
+          );
+          formManager.renderForm(formStructure, "form-container");
+        } catch (error) {
+          errorManager.handleError(error);
+        }
+      });
+    </script>
+  </body>
+</html>

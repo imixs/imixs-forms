@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<imixs-form>
+  <imixs-form-section label="Address:"> <!-- each section has 12 columns -->
+    <item name="zip" type="text"  label="ZIP-DEBUG:" span="2" />
+    <item name="city" type="text"  label="City:" span="6" />
+    <item name="country" type="text"  label="Country:" span="4" />
+  </imixs-form-section>
+  <imixs-form-section label="Order Details">
+    <item name="budget" type="currency"  label="Budget:" span="6" />
+    <item name="details" type="html" label="Description" />
+  </imixs-form-section>
+</imixs-form>
