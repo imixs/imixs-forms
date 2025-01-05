@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Imixs Form Generator Test</title>
     <link rel="stylesheet" href="./css/styles.css" />
-    <link rel="stylesheet" href="./css/error-styles.css" />
   </head>
   <body>
     <div id="form-container"></div>
@@ -46,11 +45,22 @@
           const modelData = await modelManager.getTaskDefinition();
           console.log("Model data:", modelData);
 
+          // Extract form definition
+          const formDefinition = modelManager.getFormDefinition(modelData);
+          if (!formDefinition) {
+            throw new Error("No form definition found in task data");
+          }
+          console.debug("Form definition:", formDefinition);
+
+          // Get available events for this task
+          const events = await modelManager.getTaskEvents();
+          console.log("Available events:", events);
+
           // Generate form from definition
           const formStructure = await formManager.parseFormDefinition(
-            modelData.formDefinition
+            formDefinition
           );
-          formManager.renderForm(formStructure, "form-container");
+          formManager.renderForm(formStructure, "form-container", events);
         } catch (error) {
           errorManager.handleError(error);
         }

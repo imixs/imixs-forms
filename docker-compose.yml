@@ -1,5 +1,4 @@
 services:
-
   db:
     image: postgres:13.11
     environment:
@@ -22,10 +21,9 @@ services:
       - "8080:8080"
       - "9990:9990"
       - "8787:8787"
-    
+
     volumes:
       - ./src/:/opt/jboss/wildfly/standalone/deployments/imixs-microservice.war/app/
- 
 
   # imixsadmin:
   #   image: imixs/imixs-admin

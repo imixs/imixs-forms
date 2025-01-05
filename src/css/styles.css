@@ -75,6 +75,26 @@ button[type="submit"]:hover {
   background-color: #0056b3;
 }
 
+.imixs-form-buttons {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.imixs-submit-button {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  text-transform: capitalize;
+}
+
+.imixs-submit-button:hover {
+  background-color: #0056b3;
+}
+
 /* Error styles */
 .error-container {
   position: fixed;
