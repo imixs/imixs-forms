@@ -29,12 +29,8 @@ By combining the power of BPMN modeling with custom web development, developers 
 1. Include the required files:
 
 ```html
-<link rel="stylesheet" href="src/css/styles.css" />
-<script src="./js/ErrorManager.js"></script>
-<script src="./js/DataManager.js"></script>
-<script src="./js/ModelManager.js"></script>
-<script src="./js/FormManager.js"></script>
-<script src="./js/ImixsFormController.js"></script>
+<link rel="stylesheet" href="src/css/imixs-forms.css" />
+<script src="./imixs-forms.min.js"></script>
 ```
 
 2. Add a container element and initialize the form:
@@ -45,7 +41,20 @@ By combining the power of BPMN modeling with custom web development, developers 
 <script>
     // Initialize form with default settings
     const form = new ImixsFormController("form-container");
+</script>
+```
 
+That's it! The form will automatically:
+
+-   Load the BPMN model data
+-   Generate the form based on your model
+-   Handle form submissions
+-   Manage workflow transitions
+
+You can also overwrite the default Rest API parameters for your Imixs-Microservice:
+
+```html
+<script>
     // Or with custom configuration
     const form = new ImixsFormController("form-container", {
         baseUrl: "/api",
@@ -56,13 +65,6 @@ By combining the power of BPMN modeling with custom web development, developers 
     });
 </script>
 ```
-
-That's it! The form will automatically:
-
--   Load the BPMN model data
--   Generate the form based on your model
--   Handle form submissions
--   Manage workflow transitions
 
 ## Form Definition
 
