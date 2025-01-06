@@ -24,36 +24,6 @@ By combining the power of BPMN modeling with custom web development, developers 
 -   Automatic form state management
 -   Dynamic action button generation
 
-## Architecture
-
-Imixs-Forms consists of three main components that work together to create and manage dynamic forms:
-
-### ModelManager
-
-The ModelManager is responsible for loading BPMN model data from the Imixs-Workflow engine. It:
-
--   Fetches task definitions via REST API
--   Extracts form definitions and metadata
--   Handles model versioning and task IDs
-
-### FormManager
-
-The FormManager handles the form lifecycle including:
-
--   Parsing XML form definitions
--   Generating dynamic HTML forms
--   Managing the form submission process
--   Emitting form events
-
-### ErrorManager
-
-The ErrorManager provides a centralized error handling mechanism with:
-
--   User-friendly error messages
--   Different message types (Error, Warning, Info)
--   Animated notifications
--   Automatic message dismissal
-
 ## Quick Start
 
 1. Include the required files:
@@ -61,42 +31,38 @@ The ErrorManager provides a centralized error handling mechanism with:
 ```html
 <link rel="stylesheet" href="src/css/styles.css" />
 <script src="./js/ErrorManager.js"></script>
+<script src="./js/DataManager.js"></script>
 <script src="./js/ModelManager.js"></script>
 <script src="./js/FormManager.js"></script>
+<script src="./js/ImixsFormController.js"></script>
 ```
 
-2. Initialize the managers:
+2. Add a container element and initialize the form:
 
-```javascript
-const errorManager = new ErrorManager();
-const modelManager = new ModelManager({
-    baseUrl: "/api",
-    modelversion: "1.0.0",
-    taskid: "1000",
-});
+```html
+<div id="form-container"></div>
 
-const formManager = new FormManager({
-    baseUrl: "/api",
-    workflowEndpoint: "workflow/workitem",
-});
+<script>
+    // Initialize form with default settings
+    const form = new ImixsFormController("form-container");
+
+    // Or with custom configuration
+    const form = new ImixsFormController("form-container", {
+        baseUrl: "/api",
+        credentials: {
+            username: "admin",
+            password: "password",
+        },
+    });
+</script>
 ```
 
-3. Load and render a form:
+That's it! The form will automatically:
 
-```javascript
-try {
-    // Get task definition from model
-    const modelData = await modelManager.getTaskDefinition();
-
-    // Generate form from definition
-    const formStructure = await formManager.parseFormDefinition(
-        modelData.formDefinition
-    );
-    formManager.renderForm(formStructure, "form-container");
-} catch (error) {
-    errorManager.handleError(error);
-}
-```
+-   Load the BPMN model data
+-   Generate the form based on your model
+-   Handle form submissions
+-   Manage workflow transitions
 
 ## Form Definition
 
@@ -183,13 +149,39 @@ To take full advantage of these features, make sure to:
 2. Use VS Code as your editor
 3. Allow the editor to format files on save when asked
 
-## Events
+## Architecture
+
+Imixs-Forms consists of three main components that work together to create and manage dynamic forms:
+
+### ModelManager
+
+The ModelManager is responsible for loading BPMN model data from the Imixs-Workflow engine. It:
+
+-   Fetches task definitions via REST API
+-   Extracts form definitions and metadata
+-   Handles model versioning and task IDs
+
+### FormManager
+
+The FormManager handles the form lifecycle including:
+
+-   Parsing XML form definitions
+-   Generating dynamic HTML forms
+-   Managing the form submission process
+-   Emitting form events
+
+### ErrorManager
+
+The ErrorManager provides a centralized error handling mechanism with:
+
+-   User-friendly error messages
+-   Different message types (Error, Warning, Info)
+-   Animated notifications
+-   Automatic message dismissal
+
+### Events
 
 The FormManager emits the following events:
 
 -   `formSubmitSuccess`: When form data is successfully submitted
 -   `formSubmitError`: When an error occurs during submission
-
-## License
-
-[Add your license information here]
