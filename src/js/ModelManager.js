@@ -1,5 +1,5 @@
 // ModelManager.js
-class ModelManager {
+export class ModelManager {
     constructor(dataManager) {
         this.dataManager = dataManager;
     }

@@ -127,6 +127,16 @@ During development, you can also use VS Code's Live Server for quick testing and
 
 The application will automatically open in your default web browser. Live Server will automatically reload the page whenever you make changes to your files.
 
+### Build Process
+
+To build the imixs-forms library we use eslint. To run the build process with npm run:
+
+    $ npm run build
+
+To autotically what changes during development run:
+
+    $ npm run watch
+
 ### VSCode Settings
 
 This project includes VS Code settings for consistent code formatting and validation. When you open the project in VS Code, it will recommend installing the following extensions:

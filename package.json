@@ -1,0 +1,21 @@
+{
+    "name": "imixs-forms",
+    "version": "1.0.0",
+    "description": "A lightweight form generator for Imixs-Workflow",
+    "main": "dist/imixs-forms.min.js",
+    "scripts": {
+        "build": "node build.js",
+        "watch": "node build.js --watch"
+    },
+    "keywords": [
+        "imixs",
+        "workflow",
+        "forms",
+        "bpmn"
+    ],
+    "author": "",
+    "license": "ISC",
+    "devDependencies": {
+        "esbuild": "^0.19.12"
+    }
+}

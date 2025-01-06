@@ -1,6 +1,11 @@
 /**
  * The ImixsFormController is the main class that can be used to initialize a form in a Single Page Application
  */
+import { DataManager } from "./DataManager.js";
+import { ModelManager } from "./ModelManager.js";
+import { FormManager } from "./FormManager.js";
+import { ErrorManager } from "./ErrorManager.js";
+
 class ImixsFormController {
     constructor(containerId, config = {}) {
         this.containerId = containerId;
@@ -61,3 +66,5 @@ class ImixsFormController {
         this.formManager.renderForm(formStructure, this.containerId, events);
     }
 }
+
+export { ImixsFormController };

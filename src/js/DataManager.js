@@ -1,5 +1,5 @@
 // DataManager.js
-class DataManager {
+export class DataManager {
     constructor(config = {}) {
         // Parse URL parameters for common workflow parameters
         const urlParams = new URLSearchParams(window.location.search);
