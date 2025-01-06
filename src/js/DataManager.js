@@ -118,8 +118,24 @@ class DataManager {
             const response = await this.fetchData(url);
             const xmlText = await response.text();
 
-            this.workitemXML = this.parseXMLString(xmlText);
-            return this.workitemXML;
+            // Parse complete response
+            const fullXML = this.parseXMLString(xmlText);
+
+            // Extract first document element
+            const documentElement = fullXML.getElementsByTagName("document")[0];
+
+            // Create new document with extracted element as root
+            const doc = this.createDocument();
+            const newDocumentElement = doc.documentElement;
+
+            // Copy attributes and content
+            for (let attr of documentElement.attributes) {
+                newDocumentElement.setAttribute(attr.name, attr.value);
+            }
+            newDocumentElement.innerHTML = documentElement.innerHTML;
+
+            this.workitemXML = doc;
+            return doc;
         } catch (error) {
             console.error("Error loading workitem:", error);
             throw error;

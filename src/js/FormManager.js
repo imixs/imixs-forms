@@ -52,6 +52,9 @@ class FormManager {
         const form = document.createElement("form");
         form.className = "imixs-form";
 
+        // Build and append the header
+        this._buildHeader(form);
+
         // Render form sections
         formStructure.forEach((section) => {
             const sectionDiv = document.createElement("div");
@@ -73,7 +76,6 @@ class FormManager {
                 itemDiv.appendChild(label);
 
                 const input = this._createInputElement(item);
-                // Load existing value if available
                 const existingValue = this.dataManager.getItemValue(
                     item.name,
                     this.dataManager.workitemXML
@@ -90,33 +92,8 @@ class FormManager {
             form.appendChild(sectionDiv);
         });
 
-        // Create button container
-        const buttonContainer = document.createElement("div");
-        buttonContainer.className = "imixs-form-buttons";
-
-        // Add event buttons
-        events.forEach((event) => {
-            if (event && event["workflow.public"] === true && event.name) {
-                const button = document.createElement("button");
-                button.type = "submit";
-                button.className = "imixs-submit-button";
-                button.textContent = event.name;
-                button.dataset.eventid = event.eventid;
-                buttonContainer.appendChild(button);
-            }
-        });
-
-        // If no events provided, add default submit button
-        if (events.length === 0) {
-            const defaultButton = document.createElement("button");
-            defaultButton.type = "submit";
-            defaultButton.className = "imixs-submit-button";
-            defaultButton.textContent = "Submit";
-            defaultButton.dataset.eventid = this.dataManager.config.eventid;
-            buttonContainer.appendChild(defaultButton);
-        }
-
-        form.appendChild(buttonContainer);
+        // Build and append action buttons
+        this._buildActionButtons(form, events);
 
         // Bind submit handler
         form.addEventListener("submit", (e) => {
@@ -129,6 +106,69 @@ class FormManager {
 
         container.innerHTML = "";
         container.appendChild(form);
+    }
+
+    /**
+     * Builds a workitem header with status information about the current workitem.
+     *
+     */
+    _buildHeader(form) {
+        const workflowGroup =
+            this.dataManager.getItemValue(
+                "$workflowgroup",
+                this.dataManager.workitemXML
+            )?.value || "";
+        const workflowStatus =
+            this.dataManager.getItemValue(
+                "$workflowstatus",
+                this.dataManager.workitemXML
+            )?.value || "";
+        const workflowSummary =
+            this.dataManager.getItemValue(
+                "$workflowsummary",
+                this.dataManager.workitemXML
+            )?.value || "";
+
+        const groupHeader = document.createElement("h2");
+        groupHeader.textContent = `${workflowGroup} - ${workflowStatus}`;
+        form.appendChild(groupHeader);
+
+        const summaryHeader = document.createElement("p");
+        summaryHeader.textContent = `${workflowSummary}`;
+        form.appendChild(summaryHeader);
+    }
+
+    /**
+     * Builds the action buttons for a workitem based on the BPMN Model information
+     *
+     * @param {*} form
+     * @param {*} events
+     */
+    _buildActionButtons(form, events) {
+        const buttonContainer = document.createElement("div");
+        buttonContainer.className = "imixs-form-buttons";
+
+        events.forEach((event) => {
+            if (event && event["workflow.public"] === true && event.name) {
+                const button = document.createElement("button");
+                button.type = "submit";
+                button.className = "imixs-submit-button";
+                button.textContent = event.name;
+                button.dataset.eventid = event.eventid;
+                buttonContainer.appendChild(button);
+            }
+        });
+
+        if (events.length === 0) {
+            const defaultButton = document.createElement("button");
+            defaultButton.type = "submit";
+            defaultButton.className = "imixs-submit-button";
+            defaultButton.textContent = "Submit";
+            defaultButton.dataset.eventid = this.dataManager.config.eventid;
+            buttonContainer.appendChild(defaultButton);
+        }
+
+        form.appendChild(buttonContainer);
     }
 
     /**

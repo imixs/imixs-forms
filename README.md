@@ -1,15 +1,28 @@
 # Imixs Forms
 
-A lightweight, framework-agnostic form generator for the Imixs-Workflow engine.
+A lightweight, framework-agnostic form generator for building Single Page Applications with Imixs-Workflow.
+
+## Overview
+
+Imixs Forms helps developers to build custom Single Page Applications based on BPMN models. Using the [Imixs BPMN Modeler](https://www.open-bpmn.org), developers can define their workflow and form definitions directly in the BPMN model while maintaining full control over the application design and implementation. The framework provides all necessary tools for:
+
+-   Form layouts and fields
+-   Workflow states and transitions
+-   Action buttons and events
+-   Business logic
+
+By combining the power of BPMN modeling with custom web development, developers can create tailored workflow applications with minimal overhead while maintaining full flexibility in their implementation.
 
 ## Features
 
-- Generates web forms from XML definitions
-- No external dependencies
-- Grid-based layout system
-- Easy integration with Imixs-Workflow
-- Extensible architecture
-- Modern error handling with user feedback
+-   Generates web forms directly from BPMN models
+-   No external dependencies
+-   Grid-based layout system
+-   Easy integration with Imixs-Workflow
+-   Extensible architecture
+-   Modern error handling with user feedback
+-   Automatic form state management
+-   Dynamic action button generation
 
 ## Architecture
 
@@ -19,27 +32,27 @@ Imixs-Forms consists of three main components that work together to create and m
 
 The ModelManager is responsible for loading BPMN model data from the Imixs-Workflow engine. It:
 
-- Fetches task definitions via REST API
-- Extracts form definitions and metadata
-- Handles model versioning and task IDs
+-   Fetches task definitions via REST API
+-   Extracts form definitions and metadata
+-   Handles model versioning and task IDs
 
 ### FormManager
 
 The FormManager handles the form lifecycle including:
 
-- Parsing XML form definitions
-- Generating dynamic HTML forms
-- Managing the form submission process
-- Emitting form events
+-   Parsing XML form definitions
+-   Generating dynamic HTML forms
+-   Managing the form submission process
+-   Emitting form events
 
 ### ErrorManager
 
 The ErrorManager provides a centralized error handling mechanism with:
 
-- User-friendly error messages
-- Different message types (Error, Warning, Info)
-- Animated notifications
-- Automatic message dismissal
+-   User-friendly error messages
+-   Different message types (Error, Warning, Info)
+-   Animated notifications
+-   Automatic message dismissal
 
 ## Quick Start
 
@@ -57,14 +70,14 @@ The ErrorManager provides a centralized error handling mechanism with:
 ```javascript
 const errorManager = new ErrorManager();
 const modelManager = new ModelManager({
-  baseUrl: "/api",
-  modelversion: "1.0.0",
-  taskid: "1000",
+    baseUrl: "/api",
+    modelversion: "1.0.0",
+    taskid: "1000",
 });
 
 const formManager = new FormManager({
-  baseUrl: "/api",
-  workflowEndpoint: "workflow/workitem",
+    baseUrl: "/api",
+    workflowEndpoint: "workflow/workitem",
 });
 ```
 
@@ -72,16 +85,16 @@ const formManager = new FormManager({
 
 ```javascript
 try {
-  // Get task definition from model
-  const modelData = await modelManager.getTaskDefinition();
+    // Get task definition from model
+    const modelData = await modelManager.getTaskDefinition();
 
-  // Generate form from definition
-  const formStructure = await formManager.parseFormDefinition(
-    modelData.formDefinition
-  );
-  formManager.renderForm(formStructure, "form-container");
+    // Generate form from definition
+    const formStructure = await formManager.parseFormDefinition(
+        modelData.formDefinition
+    );
+    formManager.renderForm(formStructure, "form-container");
 } catch (error) {
-  errorManager.handleError(error);
+    errorManager.handleError(error);
 }
 ```
 
@@ -108,8 +121,8 @@ You can run your app in any Web Server or you can deploy it directly into the Im
 
 To integrate Imixs-Forms into your Imixs-Workflow project, you can use the [Imixs-Microservice](https://github.com/imixs/imixs-microservice/) as a Docker container. You just need to have Docker installed on your system:
 
-- **Windows/Mac**: Install [Docker Desktop](https://www.docker.com/products/docker-desktop/)
-- **Linux**: Install [Docker Engine](https://docs.docker.com/engine/install/) and [Docker Compose](https://docs.docker.com/compose/install/)
+-   **Windows/Mac**: Install [Docker Desktop](https://www.docker.com/products/docker-desktop/)
+-   **Linux**: Install [Docker Engine](https://docs.docker.com/engine/install/) and [Docker Compose](https://docs.docker.com/compose/install/)
 
 After installation, start the Imixs-Workflow service with:
 
@@ -140,9 +153,9 @@ During development, you can also use VS Code's Live Server for quick testing and
 
 1. Install [Visual Studio Code](https://code.visualstudio.com/) if not already installed
 2. Open VS Code and install the "Live Server" extension
-   - Click the Extensions icon in the left sidebar (or press Ctrl+Shift+X)
-   - Search for "Live Server"
-   - Click "Install" for the extension by Ritwick Dey
+    - Click the Extensions icon in the left sidebar (or press Ctrl+Shift+X)
+    - Search for "Live Server"
+    - Click "Install" for the extension by Ritwick Dey
 3. Open the Imixs-Forms project folder in VS Code
 4. Right-click on `src/index.html` and select "Open with Live Server"
 
@@ -152,17 +165,17 @@ The application will automatically open in your default web browser. Live Server
 
 This project includes VS Code settings for consistent code formatting and validation. When you open the project in VS Code, it will recommend installing the following extensions:
 
-- Prettier - Code formatter
-- ESLint - JavaScript linting
-- Live Server - Development server
+-   Prettier - Code formatter
+-   ESLint - JavaScript linting
+-   Live Server - Development server
 
 The project settings will automatically:
 
-- Format code on save
-- Validate JavaScript, HTML, and CSS
-- Maintain consistent code style
-- Remove trailing whitespace
-- Ensure consistent line endings
+-   Format code on save
+-   Validate JavaScript, HTML, and CSS
+-   Maintain consistent code style
+-   Remove trailing whitespace
+-   Ensure consistent line endings
 
 To take full advantage of these features, make sure to:
 
@@ -174,8 +187,8 @@ To take full advantage of these features, make sure to:
 
 The FormManager emits the following events:
 
-- `formSubmitSuccess`: When form data is successfully submitted
-- `formSubmitError`: When an error occurs during submission
+-   `formSubmitSuccess`: When form data is successfully submitted
+-   `formSubmitError`: When an error occurs during submission
 
 ## License
 
