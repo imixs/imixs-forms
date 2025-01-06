@@ -1,71 +1,79 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Imixs Form Generator Test</title>
-    <link rel="stylesheet" href="./css/styles.css" />
-  </head>
-  <body>
-    <div id="form-container"></div>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Imixs Form Generator Test</title>
+        <link rel="stylesheet" href="./css/styles.css" />
+    </head>
+    <body>
+        <div id="form-container"></div>
 
-    <script src="./js/ErrorManager.js"></script>
-    <script src="./js/DataManager.js"></script>
-    <script src="./js/ModelManager.js"></script>
-    <script src="./js/FormManager.js"></script>
-    <script>
-      document.addEventListener("DOMContentLoaded", async () => {
-        const errorManager = new ErrorManager();
+        <script src="./js/ErrorManager.js"></script>
+        <script src="./js/DataManager.js"></script>
+        <script src="./js/ModelManager.js"></script>
+        <script src="./js/FormManager.js"></script>
+        <script>
+            document.addEventListener("DOMContentLoaded", async () => {
+                const errorManager = new ErrorManager();
 
-        const modelManager = new ModelManager({
-          baseUrl: "/api",
-          modelversion: "1.0.0",
-          taskid: "1000",
-        });
+                // Create and configure central DataManager instance
+                const dataManager = new DataManager({
+                    baseUrl: "/api",
+                    workflowEndpoint: "workflow/workitem",
+                    credentials: {
+                        // username: "admin",
+                        // password: "password"
+                    },
+                    mockMode: false,
+                });
 
-        const formManager = new FormManager({
-          baseUrl: "/api",
-          workflowEndpoint: "workflow/workitem",
-          mockMode: true,
-        });
+                // Initialize other managers with the DataManager instance
+                const modelManager = new ModelManager(dataManager);
+                const formManager = new FormManager(dataManager);
 
-        // Event Listener für Form-Submission
-        document.addEventListener("formSubmitSuccess", (e) => {
-          console.log("Form data:", e.detail);
-          errorManager.showInfo("Form submitted successfully!", {
-            timeout: 3000,
-          });
-        });
+                // Event Listener für Form-Submission
+                document.addEventListener("formSubmitSuccess", (e) => {
+                    console.log("Form data:", e.detail);
+                    errorManager.showInfo("Form submitted successfully!", {
+                        timeout: 3000,
+                    });
+                });
 
-        document.addEventListener("formSubmitError", (e) => {
-          errorManager.handleError(e.detail.error);
-        });
+                document.addEventListener("formSubmitError", (e) => {
+                    errorManager.handleError(e.detail.error);
+                });
 
-        try {
-          // Get task definition including form definition from model
-          const modelData = await modelManager.getTaskDefinition();
-          console.log("Model data:", modelData);
+                try {
+                    // Initialize DataManager (loads workitem and task data)
+                    await dataManager.initialize();
 
-          // Extract form definition
-          const formDefinition = modelManager.getFormDefinition(modelData);
-          if (!formDefinition) {
-            throw new Error("No form definition found in task data");
-          }
-          console.debug("Form definition:", formDefinition);
+                    // Get form definition
+                    const formDefinition = modelManager.getFormDefinition();
+                    if (!formDefinition) {
+                        throw new Error(
+                            "No form definition found in task or workitem data"
+                        );
+                    }
+                    console.debug("Form definition:", formDefinition);
 
-          // Get available events for this task
-          const events = await modelManager.getTaskEvents();
-          console.log("Available events:", events);
+                    // Get available events for this task
+                    const events = await modelManager.getTaskEvents();
+                    console.log("Available events:", events);
 
-          // Generate form from definition
-          const formStructure = await formManager.parseFormDefinition(
-            formDefinition
-          );
-          formManager.renderForm(formStructure, "form-container", events);
-        } catch (error) {
-          errorManager.handleError(error);
-        }
-      });
-    </script>
-  </body>
+                    // Generate form from definition
+                    const formStructure = await formManager.parseFormDefinition(
+                        formDefinition
+                    );
+                    formManager.renderForm(
+                        formStructure,
+                        "form-container",
+                        events
+                    );
+                } catch (error) {
+                    errorManager.handleError(error);
+                }
+            });
+        </script>
+    </body>
 </html>
