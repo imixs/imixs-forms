@@ -8,7 +8,6 @@ class FormManager {
     this.config = {
       // API Configuration
       baseUrl: config.baseUrl || "/api",
-      // Optional workflow context
       workflowEndpoint: config.workflowEndpoint || "workflow/workitem",
 
       credentials: config.credentials || {},
@@ -19,16 +18,23 @@ class FormManager {
       taskid: urlParams.get("taskid") || config.taskid || "1000",
       eventid: urlParams.get("eventid") || config.eventid || "10",
     };
+
+    // Initialize DataManager
+    this.dataManager = new DataManager();
+
     // Construct full API URL
     this.apiUrl = `${this.config.baseUrl}/${this.config.workflowEndpoint}`;
     console.debug("FormManager initialized with config:", this.config);
     console.debug("API URL:", this.apiUrl);
   }
 
-  // Parse XML form definition
+  /**
+   * Parse XML form definition into a structured format
+   * @param {string} xmlString - The XML form definition string
+   * @returns {Promise<Array>} Form structure array
+   */
   async parseFormDefinition(xmlString) {
-    const parser = new DOMParser();
-    const xmlDoc = parser.parseFromString(xmlString, "text/xml");
+    const xmlDoc = this.dataManager.parseXMLString(xmlString);
     const sections = xmlDoc.getElementsByTagName("imixs-form-section");
     const formStructure = [];
 
@@ -52,7 +58,12 @@ class FormManager {
     return formStructure;
   }
 
-  // Render form HTML
+  /**
+   * Render form HTML based on form structure and events
+   * @param {Array} formStructure - The form structure array
+   * @param {string} containerId - The container element ID
+   * @param {Array} events - Optional array of workflow events
+   */
   renderForm(formStructure, containerId, events = []) {
     const container = document.getElementById(containerId);
     if (!container) {
@@ -121,7 +132,7 @@ class FormManager {
 
     form.appendChild(buttonContainer);
 
-    // Bind submit handler with the correct 'this' context
+    // Bind submit handler
     form.addEventListener("submit", (e) => {
       const submitButton = e.submitter;
       const eventId = submitButton?.dataset?.eventid || this.config.eventid;
@@ -132,7 +143,12 @@ class FormManager {
     container.appendChild(form);
   }
 
-  // Create input elements based on type
+  /**
+   * Create input element based on type
+   * @param {Object} item - The form item configuration
+   * @returns {HTMLElement} The created input element
+   * @private
+   */
   _createInputElement(item) {
     let input;
     switch (item.type) {
@@ -154,41 +170,60 @@ class FormManager {
     return input;
   }
 
-  // Handle form submission
+  /**
+   * Handle form submission
+   * @param {Event} event - The submit event
+   * @param {string} eventId - The workflow event ID
+   * @private
+   */
   async _handleSubmit(event, eventId) {
     event.preventDefault();
     const formData = new FormData(event.target);
 
     try {
-      // Im Test-Modus nur Daten ausgeben
+      // Create new document
+      const xmlDoc = this.dataManager.parseXMLString("<document/>");
+      this.dataManager.loadXMLDocument(xmlDoc);
+
+      // Add required workflow properties
+      this.dataManager.setItemValue("$modelversion", this.config.modelversion);
+      this.dataManager.setItemValue("$taskid", this.config.taskid);
+      this.dataManager.setItemValue("$eventid", eventId);
+
+      // Add form data
+      for (let [name, value] of formData.entries()) {
+        this.dataManager.setItemValue(name, value);
+      }
+
+      // Handle mock mode
       if (this.config.mockMode) {
         console.log("Form Data:", Object.fromEntries(formData));
         console.log("Event ID:", eventId);
-        const xmlDocument = this._createXMLDocument(formData, eventId);
-        console.log("XML Document:", xmlDocument);
+        const xmlString = this.dataManager.toXMLString(true);
+        console.log("XML Document:", xmlString);
 
         this._triggerEvent("formSubmitSuccess", {
           formData: Object.fromEntries(formData),
-          xmlDocument: xmlDocument,
+          xmlDocument: xmlString,
           eventId: eventId,
         });
         return;
       }
 
-      // Normaler API-Modus
-      const xmlDocument = this._createXMLDocument(formData, eventId);
+      // Send to server
       const response = await fetch(this.apiUrl, {
         method: "POST",
         headers: {
           "Content-Type": "application/xml",
           Accept: "application/xml",
-          Authorization:
-            "Basic " +
-            btoa(
-              `${this.config.credentials.username}:${this.config.credentials.password}`
-            ),
+          Authorization: this.config.credentials.username
+            ? "Basic " +
+              btoa(
+                `${this.config.credentials.username}:${this.config.credentials.password}`
+              )
+            : "",
         },
-        body: xmlDocument,
+        body: this.dataManager.toXMLString(),
       });
 
       if (!response.ok) {
@@ -203,35 +238,12 @@ class FormManager {
     }
   }
 
-  // Create XML document from form data
-  _createXMLDocument(formData, eventId) {
-    let xmlString = '<?xml version="1.0"?>\n';
-    xmlString +=
-      '<document xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema">\n';
-
-    // Add required workflow properties
-    xmlString += `  <item name="$modelversion"><value xsi:type="xs:string">${this.config.modelversion}</value></item>\n`;
-    xmlString += `  <item name="$taskid"><value xsi:type="xs:int">${this.config.taskid}</value></item>\n`;
-    xmlString += `  <item name="$eventid"><value xsi:type="xs:int">${eventId}</value></item>\n`;
-
-    // Add form data
-    for (let [name, value] of formData.entries()) {
-      const type = this._determineXMLType(value);
-      xmlString += `  <item name="${name}"><value xsi:type="xs:${type}">${value}</value></item>\n`;
-    }
-
-    xmlString += "</document>";
-    return xmlString;
-  }
-
-  // Determine XML schema type
-  _determineXMLType(value) {
-    if (!isNaN(value) && value.includes(".")) return "double";
-    if (!isNaN(value)) return "int";
-    return "string";
-  }
-
-  // Event handling
+  /**
+   * Trigger a custom event
+   * @param {string} name - Event name
+   * @param {Object} detail - Event detail object
+   * @private
+   */
   _triggerEvent(name, detail) {
     const event = new CustomEvent(name, { detail });
     document.dispatchEvent(event);
