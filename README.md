@@ -24,7 +24,25 @@ By combining the power of BPMN modeling with custom web development, developers 
 -   Automatic form state management
 -   Dynamic action button generation
 
+## Run the Demo
+
+To run the demo application you need to run Docker. If not yet installed see the [official install guide](https://docs.docker.com/engine/install/).
+
+Start the demo with
+
+```
+$ docker compose up
+```
+
+Open the application by defining your Model Entry Point:
+
+```
+http://localhost:8080/app/?modelversion=1.0&taskid=1000
+```
+
 ## Quick Start
+
+The following section gives you a brief overview how to integrate Imixs-Forms into your own Single-Page-Application.
 
 1. Include the required files:
 
@@ -49,6 +67,8 @@ By combining the power of BPMN modeling with custom web development, developers 
 ```
 http://localhost:8080/app/?modelversion=1.0&taskid=1000
 ```
+
+where `modelversion` defines your BPMN model version and `taskid` the start BPMN Task element to start with.
 
 That's it! The form will automatically:
 

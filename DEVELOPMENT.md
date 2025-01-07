@@ -55,11 +55,11 @@ The application will automatically open in your default web browser. Live Server
 
 ### Build Process
 
-To build the imixs-forms library we use eslint. To run the build process with npm run:
+To build the imixs-forms library we use eslint. If you don't have installed eslint run `npn install eslint`. To start the build process with npm run:
 
     $ npm run build
 
-To autotically what changes during development run:
+To automatically watch changes during development run:
 
     $ npm run watch
 

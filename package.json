@@ -17,5 +17,8 @@
     "license": "ISC",
     "devDependencies": {
         "esbuild": "^0.19.12"
+    },
+    "dependencies": {
+        "eslint": "^9.17.0"
     }
 }

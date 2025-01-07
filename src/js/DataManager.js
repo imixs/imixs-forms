@@ -74,7 +74,7 @@ export class DataManager {
     async loadTaskDefinition() {
         try {
             const url = this.getApiUrl(
-                `model/${this.config.modelversion}/tasks/${this.config.taskid}?format=xml&items=dataobjects,workflow.abstract,documentation`
+                `model/${this.config.modelversion}/tasks/${this.config.taskid}?format=xml&items=name,dataobjects,workflow.abstract,documentation`
             );
             const response = await this.fetchData(url);
             const xmlText = await response.text();

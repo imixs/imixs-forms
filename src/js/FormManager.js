@@ -113,7 +113,7 @@ export class FormManager {
      *
      */
     _buildHeader(form) {
-        const workflowGroup =
+        let title =
             this.dataManager.getItemValue(
                 "$workflowgroup",
                 this.dataManager.workitemXML
@@ -123,14 +123,25 @@ export class FormManager {
                 "$workflowstatus",
                 this.dataManager.workitemXML
             )?.value || "";
+
+        if (workflowStatus != "") {
+            title = title + " - " + workflowStatus;
+        }
+
         const workflowSummary =
             this.dataManager.getItemValue(
                 "$workflowsummary",
                 this.dataManager.workitemXML
             )?.value || "";
 
+        // if no title was found take the task name
+        if (title === "") {
+            title =
+                this.dataManager.getItemValue("name", this.dataManager.taskXML)
+                    ?.value || "";
+        }
         const groupHeader = document.createElement("h2");
-        groupHeader.textContent = `hello ${workflowGroup} - ${workflowStatus}`;
+        groupHeader.textContent = `${title}`;
         form.appendChild(groupHeader);
 
         const summaryHeader = document.createElement("p");

@@ -23,7 +23,7 @@ services:
             - "8787:8787"
 
         volumes:
-            - ./demo/:/opt/jboss/wildfly/standalone/deployments/imixs-microservice.war/app/
+            - ./app/:/opt/jboss/wildfly/standalone/deployments/imixs-microservice.war/app/
 
     # imixsadmin:
     #   image: imixs/imixs-admin

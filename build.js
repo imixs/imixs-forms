@@ -7,7 +7,7 @@ const watch = process.argv.includes("--watch");
 const buildConfig = {
     entryPoints: ["src/js/ImixsFormController.js"],
     bundle: true,
-    outfile: "dist/imixs-forms.min.js",
+    outfile: "app/imixs-forms.min.js",
     minify: true,
     sourcemap: true,
     format: "iife",
