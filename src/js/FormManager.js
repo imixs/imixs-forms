@@ -171,12 +171,7 @@ export class FormManager {
         });
 
         if (events.length === 0) {
-            const defaultButton = document.createElement("button");
-            defaultButton.type = "submit";
-            defaultButton.className = "imixs-submit-button";
-            defaultButton.textContent = "Submit";
-            defaultButton.dataset.eventid = this.dataManager.config.eventid;
-            buttonContainer.appendChild(defaultButton);
+            console.log("No Action events found");
         }
 
         form.appendChild(buttonContainer);

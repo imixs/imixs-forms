@@ -9,7 +9,7 @@ const buildConfig = {
     bundle: true,
     outfile: "app/imixs-forms.min.js",
     minify: true,
-    sourcemap: true,
+    sourcemap: watch ? "inline" : false, // Source Map only in Watch-Modus
     format: "iife",
     globalName: "ImixsForms",
     // Bundle all files from src directory

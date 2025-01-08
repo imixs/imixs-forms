@@ -193,7 +193,7 @@
     <bpmn2:sequenceFlow id="SequenceFlow_10" sourceRef="Task_3" targetRef="IntermediateCatchEvent_5">
       <bpmn2:documentation id="documentation_zysK1g"/>
     </bpmn2:sequenceFlow>
-    <bpmn2:intermediateCatchEvent id="event_NXm6Lg" imixs:activityid="20" name="Accept">
+    <bpmn2:intermediateCatchEvent id="event_NXm6Lg" imixs:activityid="30" name="Accept">
       <bpmn2:extensionElements>
         <imixs:item name="rtfresultlog" type="xs:string">
           <imixs:value><![CDATA[ticket accepted]]></imixs:value>

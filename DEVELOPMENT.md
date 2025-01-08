@@ -59,9 +59,15 @@ To build the imixs-forms library we use eslint. If you don't have installed esli
 
     $ npm run build
 
-To automatically watch changes during development run:
+### Debugging
+
+During development, you can use the source maps that are automatically generated in watch mode:
+
+To start the watch mode run:
 
     $ npm run watch
+
+Open your browser's developer tools (F12)
 
 ### VSCode Settings
 
