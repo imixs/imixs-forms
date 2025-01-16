@@ -480,13 +480,13 @@
         <di:waypoint x="1225.0" y="113.0"/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape bpmnElement="dataObject_tmzGVg" id="BPMNShape_TUQfOQ">
-        <dc:Bounds height="50.0" width="35.0" x="290.0" y="-250.0"/>
+        <dc:Bounds height="50.0" width="35.0" x="280.0" y="-250.0"/>
         <bpmndi:BPMNLabel id="BPMNLabel_VZAjBg">
-          <dc:Bounds height="20.0" width="100.0" x="257.5" y="-195.0"/>
+          <dc:Bounds height="20.0" width="100.0" x="247.5" y="-195.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge bpmnElement="association_98Z4SA" id="BPMNEdge_0nk6Zw" sourceElement="BPMNShape_TUQfOQ" targetElement="BPMNShape_Task_1">
-        <di:waypoint x="325.0" y="-225.0"/>
+        <di:waypoint x="315.0" y="-225.0"/>
         <di:waypoint x="400.0" y="-225.0"/>
         <di:waypoint x="400.0" y="-170.0"/>
       </bpmndi:BPMNEdge>

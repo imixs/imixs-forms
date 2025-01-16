@@ -110,6 +110,39 @@ You can put in the form definition into your BPMN Model using the [Open-BPMN Mod
 
 <img src="imixs-bpmn-001.png" />
 
+### How to Deploy a BPMN Model
+
+Imixs-Microservice automatically loads a default BPMN model from the location defined by the environment variable 'IMIXS_MODEL' during the startup. You can find example models in the folder `models/`
+
+#### Using curl
+
+To add or update a model created with [Imixs-BPMN](http://www.imixs.org/doc/modelling/index.html) during runtime use the Imixs Rest API. See the following `curl` command example:
+
+    curl --user admin:adminadmin --request POST -Tticket-en-1.0.0.bpmn http://localhost:8080/api/model/bpmn
+
+**NOTE:** cURL isn't installed in Windows by default. See the [Use Curl on Windows](https://stackoverflow.com/questions/9507353/how-do-i-install-and-use-curl-on-windows) discussion on stackoverflow.
+
+#### The Admin Client
+
+You can also use the [Imixs-Admin Client](https://github.com/imixs/imixs-admin) to manage models. The Imixs Admin client allows you to administrate your workflow instance. Just open the admin client in a separate browser window under:
+
+http://localhost:8888/
+
+And login with the following parameters:
+
+-   URL = http://app:8080/api
+-   Authentication Method = Basic
+-   User-ID = admin
+-   Password = adminadmin
+
+<img src="imixs-admin-001.png" />
+
+### Verify Model
+
+To verify if the model was deployed successfully you can check the model repository form your web browser:
+
+    http://localhost:8080/api/model
+
 ## Development
 
 Imixs-Forms is an open source project and we welcome developers to join our community. In the section [development](./DEVELOPMENT.md) you can find information about how to get started developing and contributing to this framework.
