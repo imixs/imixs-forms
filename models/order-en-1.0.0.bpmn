@@ -30,13 +30,6 @@
     <bpmn2:callConversation id="CallConversation_1" name="Stock Service"/>
   </bpmn2:collaboration>
   <bpmn2:process id="ticket" isExecutable="false" name="Ticket" processType="Public">
-    <bpmn2:textAnnotation id="TextAnnotation_1">
-      <bpmn2:text>Calls the DemoAdapter</bpmn2:text>
-      <bpmn2:documentation id="documentation_exQ0Rw"/>
-    </bpmn2:textAnnotation>
-    <bpmn2:association id="Association_1" sourceRef="TextAnnotation_1" targetRef="IntermediateCatchEvent_3">
-      <bpmn2:documentation id="documentation_76qTJw"/>
-    </bpmn2:association>
     <bpmn2:documentation id="documentation_RRDW0w"/>
   </bpmn2:process>
   <bpmn2:process definitionalCollaborationRef="Collaboration_1" id="Process_1" isExecutable="false" name="Order" processType="Private">
@@ -56,6 +49,9 @@
         <bpmn2:flowNodeRef>IntermediateCatchEvent_8</bpmn2:flowNodeRef>
         <bpmn2:flowNodeRef>BoundaryEvent_1</bpmn2:flowNodeRef>
         <bpmn2:documentation id="documentation_kuJ6EA"/>
+        <bpmn2:flowNodeRef>TextAnnotation_1</bpmn2:flowNodeRef>
+        <bpmn2:flowNodeRef>TextAnnotation_2</bpmn2:flowNodeRef>
+        <bpmn2:flowNodeRef>dataObject_qo9sDQ</bpmn2:flowNodeRef>
       </bpmn2:lane>
     </bpmn2:laneSet>
     <bpmn2:task id="Task_2" imixs:processid="1100" name="Pending">
@@ -298,20 +294,35 @@
       <bpmn2:text>This model demonstrates the combination of a Signal Adapter with a Batch-Event</bpmn2:text>
       <bpmn2:documentation id="documentation_ODOQLw"/>
     </bpmn2:textAnnotation>
+    <bpmn2:textAnnotation id="TextAnnotation_1">
+      <bpmn2:text>Calls the DemoAdapter</bpmn2:text>
+      <bpmn2:documentation id="documentation_exQ0Rw"/>
+    </bpmn2:textAnnotation>
+    <bpmn2:dataObject id="dataObject_qo9sDQ" name="Form">
+      <bpmn2:documentation id="documentation_mxsLQg"><![CDATA[<?xml version="1.0"?>
+<imixs-form>
+  <imixs-form-section label="Address Data:"> <!-- each section has 12 columns -->
+    <item name="zip" type="text"  label="ZIP:" span="2" />
+    <item name="city" type="text"  label="City:" span="6" />
+    <item name="country" type="text"  label="Country:" span="4" />
+  </imixs-form-section>
+  <imixs-form-section label="Order Details">
+    <item name="budget" type="currency"  label="Budget:" span="6" />
+    <item name="details" type="html" label="Description" />
+  </imixs-form-section>
+</imixs-form>]]></bpmn2:documentation>
+    </bpmn2:dataObject>
+    <bpmn2:association id="association_y0YzxQ" sourceRef="dataObject_qo9sDQ" targetRef="Task_1">
+      <bpmn2:documentation id="documentation_mow9Fw"/>
+    </bpmn2:association>
   </bpmn2:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1" name="Default Process Diagram">
     <bpmndi:BPMNPlane bpmnElement="Collaboration_1" id="BPMNPlane_1">
       <bpmndi:BPMNShape bpmnElement="Participant_1" id="BPMNShape_Participant_1" isHorizontal="true">
-        <dc:Bounds height="351.0" width="1301.0" x="100.0" y="150.0"/>
-        <bpmndi:BPMNLabel id="BPMNLabel_18">
-          <dc:Bounds height="31.0" width="14.0" x="106.0" y="310.0"/>
-        </bpmndi:BPMNLabel>
+        <dc:Bounds height="470.0" width="1310.0" x="100.0" y="150.0"/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="Lane_2" id="BPMNShape_Lane_2" isHorizontal="true">
-        <dc:Bounds height="351.0" width="1271.0" x="130.0" y="150.0"/>
-        <bpmndi:BPMNLabel id="BPMNLabel_24">
-          <dc:Bounds height="53.0" width="14.0" x="136.0" y="299.0"/>
-        </bpmndi:BPMNLabel>
+        <dc:Bounds height="470.0" width="1280.0" x="130.0" y="150.0"/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="StartEvent_1" id="BPMNShape_1">
         <dc:Bounds height="36.0" width="36.0" x="178.0" y="320.0"/>
@@ -327,27 +338,15 @@
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="Task_1" id="BPMNShape_Task_1">
         <dc:Bounds height="50.0" width="110.0" x="303.0" y="313.0"/>
-        <bpmndi:BPMNLabel id="BPMNLabel_4" labelStyle="BPMNLabelStyle_1">
-          <dc:Bounds height="14.0" width="59.0" x="328.0" y="331.0"/>
-        </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="Task_2" id="BPMNShape_Task_2">
         <dc:Bounds height="50.0" width="110.0" x="524.0" y="313.0"/>
-        <bpmndi:BPMNLabel id="BPMNLabel_5" labelStyle="BPMNLabelStyle_1">
-          <dc:Bounds height="14.0" width="46.0" x="556.0" y="331.0"/>
-        </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="Task_3" id="BPMNShape_Task_3">
         <dc:Bounds height="50.0" width="110.0" x="950.0" y="313.0"/>
-        <bpmndi:BPMNLabel id="BPMNLabel_6" labelStyle="BPMNLabelStyle_1">
-          <dc:Bounds height="14.0" width="48.0" x="981.0" y="331.0"/>
-        </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="Task_4" id="BPMNShape_Task_4">
         <dc:Bounds height="50.0" width="110.0" x="1200.0" y="313.0"/>
-        <bpmndi:BPMNLabel id="BPMNLabel_7" labelStyle="BPMNLabelStyle_1">
-          <dc:Bounds height="14.0" width="60.0" x="1225.0" y="331.0"/>
-        </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="IntermediateCatchEvent_1" id="BPMNShape_IntermediateCatchEvent_1">
         <dc:Bounds height="36.0" width="36.0" x="453.0" y="320.0"/>
@@ -368,10 +367,7 @@
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="TextAnnotation_1" id="BPMNShape_TextAnnotation_1">
-        <dc:Bounds height="61.0" width="130.0" x="620.0" y="219.0"/>
-        <bpmndi:BPMNLabel id="BPMNLabel_11">
-          <dc:Bounds height="55.0" width="118.0" x="626.0" y="219.0"/>
-        </bpmndi:BPMNLabel>
+        <dc:Bounds height="61.0" width="130.0" x="704.0" y="415.0"/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="CallConversation_1" id="BPMNShape_CallConversation_1">
         <dc:Bounds height="50.0" width="58.0" x="679.0" y="560.0"/>
@@ -398,10 +394,7 @@
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="TextAnnotation_2" id="BPMNShape_TextAnnotation_2">
-        <dc:Bounds height="91.0" width="207.0" x="160.0" y="167.0"/>
-        <bpmndi:BPMNLabel id="BPMNLabel_49">
-          <dc:Bounds height="85.0" width="195.0" x="166.0" y="167.0"/>
-        </bpmndi:BPMNLabel>
+        <dc:Bounds height="91.0" width="207.0" x="193.0" y="172.0"/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="BoundaryEvent_1" id="BPMNShape_BoundaryEvent_1">
         <dc:Bounds height="36.0" width="36.0" x="586.0" y="295.0"/>
@@ -438,13 +431,6 @@
         <di:waypoint x="413.0" y="338.0"/>
         <di:waypoint x="433.0" y="338.0"/>
         <di:waypoint x="453.0" y="338.0"/>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="Association_1" id="BPMNEdge_Association_1" sourceElement="BPMNShape_TextAnnotation_1" targetElement="BPMNShape_IntermediateCatchEvent_3">
-        <bpmndi:BPMNLabel id="BPMNLabel_16"/>
-        <di:waypoint x="685.0" y="280.0"/>
-        <di:waypoint x="685.0" y="300.0"/>
-        <di:waypoint x="708.0" y="300.0"/>
-        <di:waypoint x="708.0" y="320.0"/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="SequenceFlow_2" id="BPMNEdge_SequenceFlow_2" sourceElement="BPMNShape_Task_2" targetElement="BPMNShape_IntermediateCatchEvent_3">
         <bpmndi:BPMNLabel id="BPMNLabel_37"/>
@@ -505,6 +491,18 @@
         <di:waypoint x="673.0" y="290.0"/>
         <di:waypoint x="673.0" y="338.0"/>
         <di:waypoint x="690.0" y="338.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape bpmnElement="dataObject_qo9sDQ" id="BPMNShape_wBPjXA">
+        <dc:Bounds height="50.0" width="35.0" x="274.5" y="447.0"/>
+        <bpmndi:BPMNLabel id="BPMNLabel_9hmULQ">
+          <dc:Bounds height="20.0" width="100.0" x="242.0" y="502.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge bpmnElement="association_y0YzxQ" id="BPMNEdge_gQ0smw" sourceElement="BPMNShape_wBPjXA" targetElement="BPMNShape_Task_1">
+        <di:waypoint x="292.0" y="447.0"/>
+        <di:waypoint x="292.0" y="405.0"/>
+        <di:waypoint x="358.0" y="405.0"/>
+        <di:waypoint x="358.0" y="363.0"/>
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
     <bpmndi:BPMNLabelStyle id="BPMNLabelStyle_1">

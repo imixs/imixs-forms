@@ -26,18 +26,27 @@ By combining the power of BPMN modeling with custom web development, developers 
 
 ## Run the Demo
 
-To run the demo application you need to run Docker. If not yet installed see the [official install guide](https://docs.docker.com/engine/install/).
+To run the demo application you just need to start the docker compose stack. If not yet installed see the [official install guide](https://docs.docker.com/engine/install/).
 
-Start the demo with
+Start the demo with:
 
 ```
 $ docker compose up
 ```
 
+**Note:** The docker-compose.yaml file expects a data directory `./models/` providing the BPMN models to be automatically imported during startup. So just create a directory `models/` together with your docker-compose file.
+
+```
+.
+├── docker-compose.yaml
+└── models/
+    └── ticket-en-1.0.0.bpmn
+```
+
 Open the application by defining your Model Entry Point:
 
 ```
-http://localhost:8080/app/?modelversion=1.0&taskid=1000
+http://localhost:8080/app/?modelversion=ticket-en-1.0&taskid=1000
 ```
 
 ## Quick Start
@@ -65,7 +74,7 @@ The following section gives you a brief overview how to integrate Imixs-Forms in
 3. Open the application by defining your Model Entry Point:
 
 ```
-http://localhost:8080/app/?modelversion=1.0&taskid=1000
+http://localhost:8080/app/?modelversion=ticket-en-1.0&taskid=1000
 ```
 
 where `modelversion` defines your BPMN model version and `taskid` the start BPMN Task element to start with.

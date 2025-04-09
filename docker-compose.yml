@@ -13,7 +13,7 @@ services:
             POSTGRES_USER: "postgres"
             POSTGRES_PASSWORD: "adminadmin"
             POSTGRES_CONNECTION: "jdbc:postgresql://db/workflow"
-            MODEL_DEFAULT_DATA: "/home/imixs/model/ticket-en-1.0.0.bpmn"
+            MODEL_DEFAULT_DATA: "/home/imixs/model/"
             MODEL_DEFAULT_DATA_OVERWRITE: "true"
             # Payara-Micor ENV
             MP_OPENAPI_SERVERS: "http://localhost:8080"
@@ -24,7 +24,7 @@ services:
 
         volumes:
             - ./app/:/opt/jboss/wildfly/standalone/deployments/imixs-microservice.war/app/
-
+            - ./models/:/home/imixs/model/
     imixsadmin:
         image: imixs/imixs-admin
         ports:
