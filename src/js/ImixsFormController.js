@@ -71,6 +71,12 @@ class ImixsFormController {
             worklistButton.addEventListener("click", async () => {
                 try {
                     await this.worklistManager.renderWorklist();
+                    // hide form
+                    const formContainer =
+                        document.getElementById("form-container");
+                    if (formContainer) {
+                        formContainer.style.display = "none";
+                    }
 
                     // Update URL to reflect worklist mode
                     const url = new URL(window.location.href);
@@ -88,6 +94,11 @@ class ImixsFormController {
         const newTaskButton = document.getElementById("new-task-button");
         if (newTaskButton) {
             newTaskButton.addEventListener("click", () => {
+                const formContainer = document.getElementById("form-container");
+                if (formContainer) {
+                    formContainer.style.display = "block";
+                }
+
                 // Redirect to new task form
                 const url = new URL(window.location.href);
                 url.searchParams.delete("workitem");

@@ -64,8 +64,8 @@ textarea.imixs-input {
 
 button[type="submit"] {
     padding: 10px 20px;
-    background-color: #007bff;
-    color: white;
+    background: rgb(38, 53, 68);
+    color: rgb(255, 255, 255) !important;
     border: none;
     border-radius: 4px;
     cursor: pointer;
@@ -160,6 +160,11 @@ button[type="submit"]:hover {
 }
 
 /* Worklist styling */
+#worklist-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
 .imixs-worklist {
     width: 100%;
     border-collapse: collapse;
@@ -199,16 +204,15 @@ button[type="submit"]:hover {
 
 .imixs-worklist-open-button {
     padding: 6px 12px;
-    background-color: #4caf50;
-    color: white;
+    background: rgb(38, 53, 68);
+    color: rgb(255, 255, 255) !important;
     border: none;
     border-radius: 4px;
     cursor: pointer;
     transition: background-color 0.3s;
 }
-
 .imixs-worklist-open-button:hover {
-    background-color: #45a049;
+    background-color: #0056b3;
 }
 
 /* Responsive design for smaller screens */
@@ -238,7 +242,7 @@ button[type="submit"]:hover {
 
 /* App Toolbar Styles */
 .app-toolbar {
-    background-color: #f8f9fa;
+    background-color: rgb(38, 53, 68);
     border: 1px solid #e9ecef;
     border-radius: 4px;
     padding: 15px;
@@ -247,6 +251,13 @@ button[type="submit"]:hover {
     justify-content: space-between;
     align-items: center;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    color: rgb(241, 247, 255);
+}
+
+/* If you want to add a title to the toolbar */
+.app-toolbar-title {
+    font-size: 3rem;
+    font-weight: 500;
 }
 
 .app-toolbar-group {
@@ -313,11 +324,4 @@ button[type="submit"]:hover {
     .app-toolbar button {
         flex: 1;
     }
-}
-
-/* If you want to add a title to the toolbar */
-.app-toolbar-title {
-    font-size: 3rem;
-    font-weight: 500;
-    color: #495057;
 }

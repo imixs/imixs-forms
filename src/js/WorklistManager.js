@@ -119,7 +119,7 @@ export class WorklistManager {
                     const actionCell = document.createElement("td");
                     if (uniqueId) {
                         const openButton = document.createElement("button");
-                        openButton.textContent = "Öffnen";
+                        openButton.textContent = "Open";
                         openButton.className = "imixs-worklist-open-button";
                         openButton.onclick = () => this._openWorkitem(uniqueId);
                         actionCell.appendChild(openButton);
@@ -168,7 +168,7 @@ export class WorklistManager {
         url.searchParams.set("workitem", uniqueId);
 
         // Remove unnecessary parameters
-        url.searchParams.delete("eventid");
+        url.searchParams.delete("showWorklist");
         url.searchParams.delete("modelversion");
         url.searchParams.delete("taskid");
 
