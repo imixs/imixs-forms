@@ -35,6 +35,7 @@ export class DataManager {
         this.taskXML = null; // Current BPMN task definition
         this.eventsXML = null; // Available events for current task
         this.workitemXML = null; // Current workitem data (if exists)
+        this.worklistXML = null; // worklist
     }
 
     /**
@@ -138,6 +139,25 @@ export class DataManager {
             return doc;
         } catch (error) {
             console.error("Error loading workitem:", error);
+            throw error;
+        }
+    }
+
+    /**
+     * Loads all workitems
+     * @returns {Promise<Document>} Workitem XML
+     */
+    async loadWorklist() {
+        try {
+            const url = this.getApiUrl(`workflow/tasklist/creator/null`);
+            const response = await this.fetchData(url);
+            const xmlText = await response.text();
+
+            // Parse complete response
+            this.worklistXML = this.parseXMLString(xmlText);
+            return this.worklistXML;
+        } catch (error) {
+            console.error("Error loading worklist:", error);
             throw error;
         }
     }

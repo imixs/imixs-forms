@@ -7,19 +7,33 @@
         <link rel="stylesheet" href="css/imixs-forms.css" />
     </head>
     <body>
+        <div class="app-toolbar">
+            <div class="app-toolbar-title">Imixs Forms Demo</div>
+            <div class="app-toolbar-group">
+                <button id="show-worklist-button">Show Tasklist</button>
+                <button id="new-task-button">Start new Task</button>
+            </div>
+        </div>
+
         <div id="form-container"></div>
+        <div id="worklist-container"></div>
+
         <script src="imixs-forms.min.js"></script>
 
         <script>
             // Init your form
-            const form = new ImixsForms.ImixsFormController("form-container", {
-                // Optional: overwrite default params
-                //baseUrl: "/api",
-                // credentials: {
-                //     username: "admin",
-                //     password: "password",
-                // },
-            });
+            const form = new ImixsForms.ImixsFormController(
+                "form-container",
+                "worklist-container",
+                {
+                    // Optional: overwrite default params
+                    //baseUrl: "/api",
+                    // credentials: {
+                    //     username: "admin",
+                    //     password: "password",
+                    // },
+                }
+            );
         </script>
     </body>
 </html>

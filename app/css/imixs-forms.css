@@ -159,6 +159,72 @@ button[type="submit"]:hover {
     line-height: 1.4;
 }
 
+/* Worklist styling */
+.imixs-worklist {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    font-family: Arial, sans-serif;
+}
+
+.imixs-worklist th,
+.imixs-worklist td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: left;
+}
+
+.imixs-worklist th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+    position: sticky;
+    top: 0;
+    text-align: center;
+}
+
+.imixs-worklist tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.imixs-worklist tr:hover {
+    background-color: #f0f0f0;
+}
+
+.imixs-worklist .empty-worklist {
+    text-align: center;
+    padding: 20px;
+    font-style: italic;
+    color: #666;
+}
+
+.imixs-worklist-open-button {
+    padding: 6px 12px;
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.imixs-worklist-open-button:hover {
+    background-color: #45a049;
+}
+
+/* Responsive design for smaller screens */
+@media screen and (max-width: 600px) {
+    .imixs-worklist th,
+    .imixs-worklist td {
+        padding: 8px 5px;
+        font-size: 0.9em;
+    }
+
+    .imixs-worklist-open-button {
+        padding: 4px 8px;
+        font-size: 0.9em;
+    }
+}
+
 @keyframes slideIn {
     from {
         transform: translateY(-100%);
@@ -168,4 +234,90 @@ button[type="submit"]:hover {
         transform: translateY(0);
         opacity: 1;
     }
+}
+
+/* App Toolbar Styles */
+.app-toolbar {
+    background-color: #f8f9fa;
+    border: 1px solid #e9ecef;
+    border-radius: 4px;
+    padding: 15px;
+    margin-bottom: 25px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.app-toolbar-group {
+    display: flex;
+    gap: 10px;
+}
+
+.app-toolbar button {
+    padding: 8px 16px;
+    font-size: 14px;
+    font-weight: 500;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.app-toolbar button:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+}
+
+.app-toolbar button#show-worklist-button {
+    background-color: #007bff;
+    color: white;
+}
+
+.app-toolbar button#show-worklist-button:hover {
+    background-color: #0069d9;
+}
+
+.app-toolbar button#new-task-button {
+    background-color: #28a745;
+    color: white;
+}
+
+.app-toolbar button#new-task-button:hover {
+    background-color: #218838;
+}
+
+/* Optional: Icon styling (you can add SVG icons) */
+.app-toolbar button .icon {
+    width: 16px;
+    height: 16px;
+    display: inline-block;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .app-toolbar {
+        flex-direction: column;
+        gap: 10px;
+        padding: 12px;
+    }
+
+    .app-toolbar-group {
+        width: 100%;
+        justify-content: flex-start;
+    }
+
+    .app-toolbar button {
+        flex: 1;
+    }
+}
+
+/* If you want to add a title to the toolbar */
+.app-toolbar-title {
+    font-size: 3rem;
+    font-weight: 500;
+    color: #495057;
 }
