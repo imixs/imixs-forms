@@ -79,7 +79,9 @@ class ImixsFormController {
                     }
 
                     // Update URL to reflect worklist mode
-                    const url = new URL(window.location.href);
+                    const url = new URL(
+                        window.location.href + "/worklist.html"
+                    );
                     url.searchParams.set("showWorklist", "true");
                     url.searchParams.delete("workitem");
                     url.searchParams.delete("taskid");

@@ -46,8 +46,10 @@ $ docker compose up
 Open the application by defining your Model Entry Point:
 
 ```
-http://localhost:8080/app/?modelversion=ticket-en-1.0&taskid=1000
+http://localhost:8080/app
 ```
+
+<img src="imixs-forms-001.png" />
 
 ## Quick Start
 
@@ -76,6 +78,8 @@ The following section gives you a brief overview how to integrate Imixs-Forms in
 ```
 http://localhost:8080/app/?modelversion=ticket-en-1.0&taskid=1000
 ```
+
+<img src="imixs-forms-002.png" />
 
 where `modelversion` defines your BPMN model version and `taskid` the start BPMN Task element to start with.
 

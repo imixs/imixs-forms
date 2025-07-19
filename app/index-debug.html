@@ -1,28 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Imixs Forms - Demo</title>
-        <link rel="stylesheet" href="css/imixs-forms.css" />
-    </head>
-    <body>
-        <div id="form-container"></div>
-        <script src="imixs-forms.min.js"></script>
-        <script src="./js/ErrorManager.js"></script>
-        <script src="./js/ModelManager.js"></script>
-        <script src="./js/FormManager.js"></script>
 
-        <script>
-            // Init your form
-            const form = new ImixsForms.ImixsFormController("form-container", {
-                // Optional: overwrite default params
-                //baseUrl: "/api",
-                // credentials: {
-                //     username: "admin",
-                //     password: "password",
-                // },
-            });
-        </script>
-    </body>
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Imixs Forms - Demo</title>
+    <link rel="stylesheet" href="css/imixs-forms.css" />
+</head>
+
+<body>
+    <div id="form-container">
+        <pre>Debug form for development</pre>
+    </div>
+    <script src="imixs-forms.min.js"></script>
+    <script src="./js/ErrorManager.js"></script>
+    <script src="./js/ModelManager.js"></script>
+    <script src="./js/FormManager.js"></script>
+
+    <script>
+        // Init your form
+        const form = new ImixsForms.ImixsFormController("form-container", {
+            // Optional: overwrite default params
+            //baseUrl: "/api",
+            // credentials: {
+            //     username: "admin",
+            //     password: "password",
+            // },
+        });
+    </script>
+</body>
+
 </html>
