@@ -27,7 +27,7 @@ services:
   app:
     image: imixs/imixs-microservice
     volumes:
-      - ./src/:/opt/jboss/wildfly/standalone/deployments/imixs-microservice.war/app/
+      - ./app/:/opt/jboss/wildfly/standalone/deployments/imixs-microservice.war/app/
     ports:
       - "8080:8080"
     ...

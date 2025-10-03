@@ -55,7 +55,7 @@ class ImixsFormController {
 
     _setupEventHandlers() {
         document.addEventListener("formSubmitSuccess", (e) => {
-            console.log("Form data:", e.detail);
+            console.debug("Form data:", e.detail);
             this.errorManager.showInfo("Form submitted successfully!", {
                 timeout: 3000,
             });
