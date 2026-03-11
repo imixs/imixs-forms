@@ -15,6 +15,12 @@ services:
             POSTGRES_CONNECTION: "jdbc:postgresql://db/workflow"
             MODEL_DEFAULT_DATA: "/home/imixs/model/"
             MODEL_DEFAULT_DATA_OVERWRITE: "true"
+
+
+            ASYNCEVENT_PROCESSOR_ENABLED: "true"
+            ASYNCEVENT_PROCESSOR_INITIALDELAY: "10000"
+            ASYNCEVENT_PROCESSOR_INTERVAL: "5000"
+
             # Payara-Micor ENV
             MP_OPENAPI_SERVERS: "http://localhost:8080"
         ports:
