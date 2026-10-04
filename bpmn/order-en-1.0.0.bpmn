@@ -388,7 +388,7 @@
       <bpmndi:BPMNShape bpmnElement="IntermediateCatchEvent_8" id="BPMNShape_IntermediateCatchEvent_8">
         <dc:Bounds height="36.0" width="36.0" x="807.0" y="167.0"/>
         <bpmndi:BPMNLabel id="BPMNLabel_44">
-          <dc:Bounds height="14.0" width="29.0" x="816.0" y="209.0"/>
+          <dc:Bounds height="14.0" width="29.0" x="854.0" y="177.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="TextAnnotation_2" id="BPMNShape_TextAnnotation_2">
